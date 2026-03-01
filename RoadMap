@@ -29,3 +29,4 @@ GET /api/auctions/{id} (Pobieranie szczegółów aukcji)
   "endTime": "2026-03-06T20:00:00Z",
   "sellerName": "Pecetowiec",
   "bidsCount": 3
+}
