@@ -32,7 +32,7 @@ GET /api/auctions/{id} (Pobieranie szczegółów aukcji)
 }
 
 1. Database & Repository Architect (Magdalena)
-BAZA Danych: XML (TBD)
+BAZA Danych: PostgreSQL  + XML lub JSON w zależności od potrzeb API itp
 2.Business Logic Specialist (Krzysztof)
 .NET (C#). 
 3.API & Security Engineer (Marcin)
