@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "cdSo18ITmRA=",
+  "success": true,
+  "projectFilePath": "C:\\STUDIA\\GIT\\Rozproszony_System_Aukcyjny_REST_API\\Rozproszony_System_Aukcyjny_REST_API.Server\\Rozproszony_System_Aukcyjny_REST_API.Server.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\zakrz\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.5\\microsoft.aspnetcore.openapi.10.0.5.nupkg.sha512",
+    "C:\\Users\\zakrz\\.nuget\\packages\\microsoft.aspnetcore.spaproxy\\10.0.5\\microsoft.aspnetcore.spaproxy.10.0.5.nupkg.sha512",
+    "C:\\Users\\zakrz\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

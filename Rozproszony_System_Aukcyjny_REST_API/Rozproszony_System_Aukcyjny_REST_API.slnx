@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="rozproszony_system_aukcyjny_rest_api.client/rozproszony_system_aukcyjny_rest_api.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="Rozproszony_System_Aukcyjny_REST_API.Server/Rozproszony_System_Aukcyjny_REST_API.Server.csproj" />
+</Solution>
