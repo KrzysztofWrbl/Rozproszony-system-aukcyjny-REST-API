@@ -1,19 +1,22 @@
-﻿namespace Rozproszony_System_Aukcyjny_REST_API.Server.Models
+﻿namespace Rozproszony_System_Aukcyjny_REST_API.Server.Models;
+using System.ComponentModel.DataAnnotations;
+
+public class Bid
 {
-    public class Bid
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public int AuctionId { get; set; }
+    [Required]
+    public int AuctionId { get; set; }
 
-        public Auction Auction { get; set; } = null!;
+    public Auction? Auction { get; set; }
 
-        public int BuyerId { get; set; }
+    [Required]
+    public int BuyerId { get; set; }
 
-        public User Buyer { get; set; } = null!;
+    public User? Buyer { get; set; }
 
-        public decimal Amount { get; set; }
+    [Range(0.01, double.MaxValue)]
+    public decimal Amount { get; set; }
 
-        public DateTime Timestamp { get; set; }
-    }
+    public DateTime Timestamp { get; set; } = DateTime.UtcNow;
 }

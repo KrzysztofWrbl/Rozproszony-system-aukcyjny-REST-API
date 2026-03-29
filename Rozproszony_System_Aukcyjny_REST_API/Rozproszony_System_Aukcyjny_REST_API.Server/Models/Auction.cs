@@ -1,27 +1,44 @@
 ﻿namespace Rozproszony_System_Aukcyjny_REST_API.Server.Models
+using System.ComponentModel.DataAnnotations;
+
+public enum AuctionStatus
 {
-    public class Auction
-    {
-        public int Id { get; set; }
+    Active,
+    Finished
+}
 
-        public string Title { get; set; } = null!;
+public class Auction
+{
+    public int Id { get; set; }
 
-        public string Description { get; set; } = null!;
+    [Required]
+    [MaxLength(100)]
+    public string Title { get; set; } = null!;
 
-        public string Category { get; set; } = null!;
+    [Required]
+    [MaxLength(1000)]
+    public string Description { get; set; } = null!;
 
-        public decimal StartingPrice { get; set; }
+    [Required]
+    [MaxLength(50)]
+    public string Category { get; set; } = null!;
 
-        public decimal CurrentPrice { get; set; }
+    [Range(0.01, double.MaxValue)]
+    public decimal StartingPrice { get; set; }
 
-        public DateTime StartTime { get; set; }
+    [Range(0.01, double.MaxValue)]
+    public decimal CurrentPrice { get; set; }
 
-        public DateTime EndTime { get; set; }
+    public DateTime StartTime { get; set; } = DateTime.UtcNow;
 
-        public int SellerId { get; set; }
+    public DateTime EndTime { get; set; }
 
-        public User Seller { get; set; } = null!;
+    public int SellerId { get; set; }
 
-        public ICollection<Bid> Bids { get; set; } = new List<Bid>();
-    }
+    public User? Seller { get; set; }
+
+    public ICollection<Bid> Bids { get; set; } = new List<Bid>();
+
+    public AuctionStatus Status =>
+        DateTime.UtcNow >= EndTime ? AuctionStatus.Finished : AuctionStatus.Active;
 }

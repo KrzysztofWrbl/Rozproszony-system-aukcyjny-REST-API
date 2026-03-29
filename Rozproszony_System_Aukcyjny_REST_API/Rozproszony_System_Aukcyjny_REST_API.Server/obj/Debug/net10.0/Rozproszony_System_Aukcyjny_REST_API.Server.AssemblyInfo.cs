@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Rozproszony_System_Aukcyjny_REST_API.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f2a232895885d49ea1429208e8d19cd14e597c2e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bd7b34f2d637d8e871ffcca4e4eb6033c0e1da32")]
 [assembly: System.Reflection.AssemblyProductAttribute("Rozproszony_System_Aukcyjny_REST_API.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Rozproszony_System_Aukcyjny_REST_API.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

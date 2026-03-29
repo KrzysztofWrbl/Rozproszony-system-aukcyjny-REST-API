@@ -2269,23 +2269,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\zakrz\\.nuget\\packages\\": {},
+    "C:\\Users\\krzys\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\STUDIA\\GIT\\Rozproszony_System_Aukcyjny_REST_API\\Rozproszony_System_Aukcyjny_REST_API.Server\\Rozproszony_System_Aukcyjny_REST_API.Server.csproj",
+      "projectUniqueName": "C:\\Users\\krzys\\Documents\\Rozproszony-system-aukcyjny-REST-API\\Rozproszony_System_Aukcyjny_REST_API\\Rozproszony_System_Aukcyjny_REST_API.Server\\Rozproszony_System_Aukcyjny_REST_API.Server.csproj",
       "projectName": "Rozproszony_System_Aukcyjny_REST_API.Server",
-      "projectPath": "C:\\STUDIA\\GIT\\Rozproszony_System_Aukcyjny_REST_API\\Rozproszony_System_Aukcyjny_REST_API.Server\\Rozproszony_System_Aukcyjny_REST_API.Server.csproj",
-      "packagesPath": "C:\\Users\\zakrz\\.nuget\\packages\\",
-      "outputPath": "C:\\STUDIA\\GIT\\Rozproszony_System_Aukcyjny_REST_API\\Rozproszony_System_Aukcyjny_REST_API.Server\\obj\\",
+      "projectPath": "C:\\Users\\krzys\\Documents\\Rozproszony-system-aukcyjny-REST-API\\Rozproszony_System_Aukcyjny_REST_API\\Rozproszony_System_Aukcyjny_REST_API.Server\\Rozproszony_System_Aukcyjny_REST_API.Server.csproj",
+      "packagesPath": "C:\\Users\\krzys\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\krzys\\Documents\\Rozproszony-system-aukcyjny-REST-API\\Rozproszony_System_Aukcyjny_REST_API\\Rozproszony_System_Aukcyjny_REST_API.Server\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\zakrz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\krzys\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2294,7 +2294,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
