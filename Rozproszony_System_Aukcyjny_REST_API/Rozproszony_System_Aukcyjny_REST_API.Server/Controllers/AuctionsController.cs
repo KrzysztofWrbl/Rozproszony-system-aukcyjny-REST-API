@@ -94,6 +94,46 @@ public class AuctionsController : ControllerBase
         return Ok(bids);
     }
 
+    [HttpPost("{id}/finish")]
+    public async Task<IActionResult> FinishAuction(int id)
+    {
+        var auction = await _context.Auctions
+            .Include(a => a.Bids)
+            .ThenInclude(b => b.Buyer)
+            .FirstOrDefaultAsync(a => a.Id == id);
+
+        if (auction == null)
+        {
+            return NotFound("Aukcja nie istnieje");
+        }
+
+        if (auction.EndTime > DateTime.UtcNow)
+        {
+            return BadRequest("Nie można zakończyć aukcji przed upływem czasu");
+        }
+
+        var highestBid = auction.Bids
+            .OrderByDescending(b => b.Amount)
+            .FirstOrDefault();
+
+        if (highestBid == null)
+        {
+            return Ok(new
+            {
+                AuctionId = auction.Id,
+                Message = "Aukcja zakończona bez ofert"
+            });
+        }
+
+        return Ok(new
+        {
+            AuctionId = auction.Id,
+            WinnerId = highestBid.BuyerId,
+            WinnerUsername = highestBid.Buyer?.Username,
+            WinningBid = highestBid.Amount
+        });
+    }
+
     [Authorize]
     [HttpPost("{id}/bids")]
     public async Task<IActionResult> PlaceBid(int id, CreateBidRequest request)
@@ -121,8 +161,7 @@ public class AuctionsController : ControllerBase
 
         if (request.Amount <= auction.CurrentPrice)
         {
-            return BadRequest(
-                "Oferta musi być większa od aktualnej ceny");
+            return BadRequest("Oferta musi być większa od aktualnej ceny");
         }
 
         var bid = new Bid
@@ -135,7 +174,6 @@ public class AuctionsController : ControllerBase
         auction.CurrentPrice = request.Amount;
 
         _context.Bids.Add(bid);
-
         await _context.SaveChangesAsync();
 
         return Ok(bid);
