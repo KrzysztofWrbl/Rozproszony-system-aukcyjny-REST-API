@@ -48,6 +48,17 @@ public class AuctionsController : ControllerBase
         return Ok(auction);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAuctions()
+    {
+        var auctions = await _context.Auctions
+            .Include(a => a.Seller)
+            .OrderByDescending(a => a.StartTime)
+            .ToListAsync();
+
+        return Ok(auctions);
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetAuction(int id)
     {
@@ -61,6 +72,26 @@ public class AuctionsController : ControllerBase
         }
 
         return Ok(auction);
+    }
+
+    [HttpGet("{id}/bids")]
+    public async Task<IActionResult> GetAuctionBids(int id)
+    {
+        var auctionExists = await _context.Auctions
+            .AnyAsync(a => a.Id == id);
+
+        if (!auctionExists)
+        {
+            return NotFound("Aukcja nie istnieje");
+        }
+
+        var bids = await _context.Bids
+            .Where(b => b.AuctionId == id)
+            .Include(b => b.Buyer)
+            .OrderByDescending(b => b.Amount)
+            .ToListAsync();
+
+        return Ok(bids);
     }
 
     [Authorize]
@@ -90,7 +121,8 @@ public class AuctionsController : ControllerBase
 
         if (request.Amount <= auction.CurrentPrice)
         {
-            return BadRequest("Oferta musi być większa od aktualnej ceny");
+            return BadRequest(
+                "Oferta musi być większa od aktualnej ceny");
         }
 
         var bid = new Bid
@@ -103,6 +135,7 @@ public class AuctionsController : ControllerBase
         auction.CurrentPrice = request.Amount;
 
         _context.Bids.Add(bid);
+
         await _context.SaveChangesAsync();
 
         return Ok(bid);
