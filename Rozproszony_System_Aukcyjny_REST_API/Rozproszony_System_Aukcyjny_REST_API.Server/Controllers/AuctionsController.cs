@@ -125,6 +125,11 @@ public class AuctionsController : ControllerBase
             });
         }
 
+
+        auction.WinnerId = highestBid.BuyerId;
+
+        await _context.SaveChangesAsync();
+
         return Ok(new
         {
             AuctionId = auction.Id,

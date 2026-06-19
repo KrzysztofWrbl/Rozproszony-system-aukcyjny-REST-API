@@ -27,6 +27,12 @@ namespace Rozproszony_System_Aukcyjny_REST_API.Server.Data
                 .HasForeignKey(a => a.SellerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Auction>()
+                .HasOne(a => a.Winner)
+                .WithMany()
+                .HasForeignKey(a => a.WinnerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<Bid>()
                 .HasOne(b => b.Buyer)
                 .WithMany(u => u.Bids)
