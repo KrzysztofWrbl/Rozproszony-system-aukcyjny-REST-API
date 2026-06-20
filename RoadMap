@@ -1,0 +1,41 @@
+RoadMap:
+
+Faza 1: Projektowanie
+Ustalenie modeli danych i kontraktu API (jakie pola ma JSON).
+
+Model danych (Tabele):
+User (Id, Username, Email, Password)
+Auction (Id, Title, Description, Category, StartingPrice, CurrentPrice, StartTime, EndTime, SellerID (Klucz do User)
+Bid (Id, Auction Id (klucz do Auction). BuyerId (klucz do User), Amount, Timestamp)
+
+Osoba 1 tworzy repozytorium na Git i szkielet projektu - Repezytorium DONE, Szkielet folderów w Visual Studio - tbd
+
+POST /api/auctions (Tworzenie aukcji):
+
+{
+  "title": "Komputer Stacjonarny",
+  "description": "Używany, dedykowana GPU",
+  "category": "PC",
+  "startingPrice": 1700.00,
+  "durationInDays": 7
+}
+
+GET /api/auctions/{id} (Pobieranie szczegółów aukcji)
+
+{
+  "id": 1,
+  "title": "Komputer Stacjonarny",
+  "currentPrice": 1950.00,
+  "endTime": "2026-03-06T20:00:00Z",
+  "sellerName": "Pecetowiec",
+  "bidsCount": 3
+}
+
+1. Database & Repository Architect (Magdalena)
+BAZA Danych: PostgreSQL  + XML lub JSON w zależności od potrzeb API itp
+2.Business Logic Specialist (Krzysztof)
+.NET (C#). 
+3.API & Security Engineer (Marcin)
+TBD
+4. Frontend Developer (Interfejs Użytkownika) (Katarzyna)
+Frontend: Java (React/Angular)? ZALECANY: Blazor WebAssembly Hosted.

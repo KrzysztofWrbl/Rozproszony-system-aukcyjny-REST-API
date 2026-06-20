@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:61089",
+"RedirectUrl": "",
+"LaunchCommand": "npm run dev",
+"WorkingDirectory": "C:\\Users\\krzys\\Documents\\Rozproszony-system-aukcyjny-REST-API\\Rozproszony_System_Aukcyjny_REST_API\\Rozproszony_System_Aukcyjny_REST_API.Server\\..\\rozproszony_system_aukcyjny_rest_api.client",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}
