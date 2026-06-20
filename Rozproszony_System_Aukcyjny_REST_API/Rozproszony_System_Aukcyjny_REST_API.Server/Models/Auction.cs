@@ -1,4 +1,4 @@
-﻿namespace Rozproszony_System_Aukcyjny_REST_API.Server.Models
+﻿namespace Rozproszony_System_Aukcyjny_REST_API.Server.Models;
 using System.ComponentModel.DataAnnotations;
 
 public enum AuctionStatus
