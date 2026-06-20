@@ -10,14 +10,29 @@ function AuthPanel() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+  e.preventDefault();
+  const url = isLoginView ? 'http://localhost:5044/api/auth/login' : 'http://localhost:5044/api/auth/register';
+  
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password, username: isLoginView ? undefined : username })
+  });
+
+  if (response.ok) {
     if (isLoginView) {
-      alert(`Logowanie...\nEmail: ${email}`);
+      const data = await response.json();
+      localStorage.setItem('token', data.token); // ZAPISUJEMY TOKEN!
+      alert("Zalogowano!");
     } else {
-      alert(`Rejestracja...\nUżytkownik: ${username}\nEmail: ${email}`);
+      alert("Zarejestrowano! Teraz możesz się zalogować.");
+      setIsLoginView(true);
     }
-  };
+  } else {
+    alert("Błąd: " + await response.text());
+  }
+};
 
   return (
     <div style={{ 
