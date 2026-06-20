@@ -60,9 +60,14 @@ namespace Rozproszony_System_Aukcyjny_REST_API.Server.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<int?>("WinnerId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SellerId");
+
+                    b.HasIndex("WinnerId");
 
                     b.ToTable("Auctions");
                 });
@@ -133,7 +138,14 @@ namespace Rozproszony_System_Aukcyjny_REST_API.Server.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Rozproszony_System_Aukcyjny_REST_API.Server.Models.User", "Winner")
+                        .WithMany()
+                        .HasForeignKey("WinnerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Seller");
+
+                    b.Navigation("Winner");
                 });
 
             modelBuilder.Entity("Rozproszony_System_Aukcyjny_REST_API.Server.Models.Bid", b =>

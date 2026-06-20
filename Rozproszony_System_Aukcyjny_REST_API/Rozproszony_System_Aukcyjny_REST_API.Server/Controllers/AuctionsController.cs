@@ -19,30 +19,45 @@ public class AuctionsController : ControllerBase
         _context = context;
     }
 
-[Authorize]
-[HttpPost]
-public async Task<IActionResult> CreateAuction(
-    CreateAuctionRequest request)
-{
-    var userId = int.Parse(
-        User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-
-    var auction = new Auction
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> CreateAuction(CreateAuctionRequest request)
     {
-        Title = request.Title,
-        Description = request.Description,
-        Category = request.Category,
-        StartingPrice = request.StartingPrice,
-        CurrentPrice = request.StartingPrice,
-        EndTime = request.EndTime,
-        SellerId = userId
-    };
+        var userId = int.Parse(
+            User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
-    _context.Auctions.Add(auction);
-    await _context.SaveChangesAsync();
+        if (request.EndTime <= DateTime.UtcNow)
+        {
+            return BadRequest("Data zakończenia aukcji musi być w przyszłości");
+        }
 
-    return Ok(auction);
-}
+        var auction = new Auction
+        {
+            Title = request.Title,
+            Description = request.Description,
+            Category = request.Category,
+            StartingPrice = request.StartingPrice,
+            CurrentPrice = request.StartingPrice,
+            EndTime = request.EndTime,
+            SellerId = userId
+        };
+
+        _context.Auctions.Add(auction);
+        await _context.SaveChangesAsync();
+
+        return Ok(auction);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAuctions()
+    {
+        var auctions = await _context.Auctions
+            .Include(a => a.Seller)
+            .OrderByDescending(a => a.StartTime)
+            .ToListAsync();
+
+        return Ok(auctions);
+    }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetAuction(int id)
@@ -59,42 +74,113 @@ public async Task<IActionResult> CreateAuction(
         return Ok(auction);
     }
 
-[Authorize]
-[HttpPost("{id}/bids")]
-public async Task<IActionResult> PlaceBid(
-    int id,
-    CreateBidRequest request)
-{
-    var userId = int.Parse(
-        User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-
-    var auction = await _context.Auctions
-        .FirstOrDefaultAsync(a => a.Id == id);
-
-    if (auction == null)
+    [HttpGet("{id}/bids")]
+    public async Task<IActionResult> GetAuctionBids(int id)
     {
-        return NotFound("Aukcja nie istnieje");
+        var auctionExists = await _context.Auctions
+            .AnyAsync(a => a.Id == id);
+
+        if (!auctionExists)
+        {
+            return NotFound("Aukcja nie istnieje");
+        }
+
+        var bids = await _context.Bids
+            .Where(b => b.AuctionId == id)
+            .Include(b => b.Buyer)
+            .OrderByDescending(b => b.Amount)
+            .ToListAsync();
+
+        return Ok(bids);
     }
 
-    if (request.Amount <= auction.CurrentPrice)
+    [HttpPost("{id}/finish")]
+    public async Task<IActionResult> FinishAuction(int id)
     {
-        return BadRequest(
-            "Oferta musi być większa od aktualnej ceny");
+        var auction = await _context.Auctions
+            .Include(a => a.Bids)
+            .ThenInclude(b => b.Buyer)
+            .FirstOrDefaultAsync(a => a.Id == id);
+
+        if (auction == null)
+        {
+            return NotFound("Aukcja nie istnieje");
+        }
+
+        if (auction.EndTime > DateTime.UtcNow)
+        {
+            return BadRequest("Nie można zakończyć aukcji przed upływem czasu");
+        }
+
+        var highestBid = auction.Bids
+            .OrderByDescending(b => b.Amount)
+            .FirstOrDefault();
+
+        if (highestBid == null)
+        {
+            return Ok(new
+            {
+                AuctionId = auction.Id,
+                Message = "Aukcja zakończona bez ofert"
+            });
+        }
+
+
+        auction.WinnerId = highestBid.BuyerId;
+
+        await _context.SaveChangesAsync();
+
+        return Ok(new
+        {
+            AuctionId = auction.Id,
+            WinnerId = highestBid.BuyerId,
+            WinnerUsername = highestBid.Buyer?.Username,
+            WinningBid = highestBid.Amount
+        });
     }
 
-    var bid = new Bid
+    [Authorize]
+    [HttpPost("{id}/bids")]
+    public async Task<IActionResult> PlaceBid(int id, CreateBidRequest request)
     {
-        AuctionId = auction.Id,
-        BuyerId = userId,
-        Amount = request.Amount
-    };
+        var userId = int.Parse(
+            User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
-    auction.CurrentPrice = request.Amount;
+        var auction = await _context.Auctions
+            .FirstOrDefaultAsync(a => a.Id == id);
 
-    _context.Bids.Add(bid);
+        if (auction == null)
+        {
+            return NotFound("Aukcja nie istnieje");
+        }
 
-    await _context.SaveChangesAsync();
+        if (auction.EndTime <= DateTime.UtcNow)
+        {
+            return BadRequest("Aukcja jest już zakończona");
+        }
 
-    return Ok(bid);
-}
+        if (auction.SellerId == userId)
+        {
+            return BadRequest("Nie możesz licytować własnej aukcji");
+        }
+
+        if (request.Amount <= auction.CurrentPrice)
+        {
+            return BadRequest("Oferta musi być większa od aktualnej ceny");
+        }
+
+        var bid = new Bid
+        {
+            AuctionId = auction.Id,
+            BuyerId = userId,
+            Amount = request.Amount
+        };
+
+        auction.CurrentPrice = request.Amount;
+
+        _context.Bids.Add(bid);
+        await _context.SaveChangesAsync();
+
+        return Ok(bid);
+    }
 }
