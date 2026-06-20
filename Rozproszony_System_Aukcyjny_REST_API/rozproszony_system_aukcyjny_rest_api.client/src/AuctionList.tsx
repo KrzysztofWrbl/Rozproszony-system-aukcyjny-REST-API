@@ -1,8 +1,19 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { mockAuctions } from './mockData';
 import CountdownTimer from './CountdownTimer';
+import { apiFetch } from './api';
+import type { Auction } from './mockData';
 
 function AuctionList() {
+  const [auctions, setAuctions] = useState<Auction[]>([]);
+
+  useEffect(() => {
+    apiFetch('http://localhost:5044/api/auctions')
+      .then(response => response.json())
+      .then(data => setAuctions(data))
+      .catch(error => console.error("Błąd pobierania aukcji:", error));
+  }, []);
+
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '30px' }}>
@@ -13,7 +24,7 @@ function AuctionList() {
       </div>
 
       <div style={{ display: 'grid', gap: '24px', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))' }}>
-        {mockAuctions.map(auction => (
+        {auctions.map(auction => (
           <Link 
             key={auction.id} 
             to={`/auction/${auction.id}`}
@@ -23,7 +34,6 @@ function AuctionList() {
               style={{ 
                 background: 'var(--card-bg)', 
                 backdropFilter: 'var(--glass-blur)',
-                WebkitBackdropFilter: 'var(--glass-blur)',
                 border: '1px solid var(--card-border)', 
                 borderRadius: '20px', 
                 boxShadow: 'var(--shadow-sm)',
@@ -47,76 +57,39 @@ function AuctionList() {
                 <img 
                   src={auction.imageUrl} 
                   alt={auction.title} 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} 
-                  onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                  onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                 />
                 <div style={{ 
-                  position: 'absolute', 
-                  bottom: '12px', 
-                  right: '12px', 
-                  background: 'rgba(15, 23, 42, 0.75)', 
-                  backdropFilter: 'blur(8px)', 
-                  WebkitBackdropFilter: 'blur(8px)',
-                  color: '#fff', 
-                  padding: '6px 12px', 
-                  borderRadius: '12px', 
-                  fontSize: '12px', 
-                  fontWeight: '700', 
-                  border: '1px solid rgba(255,255,255,0.1)', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '6px' 
+                  position: 'absolute', bottom: '12px', right: '12px', 
+                  background: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(8px)', 
+                  color: '#fff', padding: '6px 12px', borderRadius: '12px', 
+                  fontSize: '12px', fontWeight: '700',
+                  display: 'flex', alignItems: 'center', gap: '6px' 
                 }}>
-                   <span style={{ fontSize: '14px' }}>⏳</span> 
+                   <span>⏳</span> 
                    <CountdownTimer targetDate={auction.endTime} />
                 </div>
               </div>
 
               <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '15px' }}>
-                  <span style={{ 
-                    background: 'rgba(99, 102, 241, 0.1)', 
-                    color: 'var(--primary-color)', 
-                    padding: '4px 10px', 
-                    borderRadius: '8px', 
-                    fontSize: '12px', 
-                    fontWeight: '700',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
-                  }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px' }}>
+                  <span style={{ background: 'rgba(99, 102, 241, 0.1)', color: 'var(--primary-color)', padding: '4px 10px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', textTransform: 'uppercase' }}>
                     {auction.category}
-                  </span>
-                  <span style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: '600' }}>
-                    Ofert: {auction.bidsCount}
                   </span>
                 </div>
                 
-                <h3 style={{ margin: '0 0 15px 0', fontSize: '20px', fontWeight: '700', lineHeight: '1.3' }}>
+                <h3 style={{ margin: '0 0 15px 0', fontSize: '20px', fontWeight: '700' }}>
                   {auction.title}
                 </h3>
                 
                 <div style={{ marginTop: 'auto', paddingTop: '20px', borderTop: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
-                    <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-muted)', fontWeight: '600' }}>Aktualna cena</p>
-                    <p style={{ margin: 0, fontSize: '24px', fontWeight: '800', color: 'var(--text-color)' }}>
-                      {auction.currentPrice.toFixed(2)} <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>PLN</span>
+                    <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-muted)' }}>Aktualna cena</p>
+                    <p style={{ margin: 0, fontSize: '24px', fontWeight: '800' }}>
+                      {auction.currentPrice.toFixed(2)} <span style={{ fontSize: '14px' }}>PLN</span>
                     </p>
                   </div>
-                  
-                  <button style={{ 
-                    background: 'var(--primary-color)', 
-                    color: 'white', 
-                    border: 'none', 
-                    padding: '10px 16px', 
-                    borderRadius: '10px', 
-                    cursor: 'pointer', 
-                    fontWeight: '600',
-                    transition: 'background 0.2s'
-                  }}
-                  onMouseOver={(e) => e.currentTarget.style.background = 'var(--primary-hover)'}
-                  onMouseOut={(e) => e.currentTarget.style.background = 'var(--primary-color)'}
-                  >
+                  <button style={{ background: 'var(--primary-color)', color: 'white', border: 'none', padding: '10px 16px', borderRadius: '10px', cursor: 'pointer', fontWeight: '600' }}>
                     Zobacz
                   </button>
                 </div>

@@ -6,17 +6,23 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Controllers
 builder.Services.AddControllers();
 
-// PostgreSQL
+// Konfiguracja CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReact", policy =>
+    {
+        policy.WithOrigins("https://localhost:61089") 
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// JWT
 var jwtKey = builder.Configuration["Jwt:Key"];
-
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -27,21 +33,18 @@ builder.Services
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
-
-            IssuerSigningKey =
-                new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(jwtKey!))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey!))
         };
     });
 
 builder.Services.AddAuthorization();
-
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+
+app.UseCors("AllowReact");
 
 app.UseDefaultFiles();
 app.MapStaticAssets();
@@ -52,12 +55,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.MapFallbackToFile("/index.html");
 
 app.Run();
