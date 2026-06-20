@@ -37,10 +37,6 @@ public class Auction
 
     public User? Seller { get; set; }
 
-    public int? WinnerId { get; set; }
-
-    public User? Winner { get; set; }
-
     public ICollection<Bid> Bids { get; set; } = new List<Bid>();
 
     public AuctionStatus Status =>
