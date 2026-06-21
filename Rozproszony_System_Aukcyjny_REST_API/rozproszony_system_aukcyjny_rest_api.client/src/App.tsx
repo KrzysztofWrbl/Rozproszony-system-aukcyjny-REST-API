@@ -13,7 +13,7 @@ function AuthPanel() {
   const handleSubmit = async (e: React.SyntheticEvent) => {
   e.preventDefault();
   
-  const url = isLoginView ? '/api/auth/login' : '/api/auth/register';
+  const url = isLoginView ? 'https://localhost:61090/api/auth/login' : 'https://localhost:61090/api/auth/register';
   
   const response = await fetch(url, {
     method: 'POST',
