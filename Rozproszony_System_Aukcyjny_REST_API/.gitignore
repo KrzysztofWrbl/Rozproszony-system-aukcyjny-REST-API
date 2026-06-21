@@ -1,0 +1,57 @@
+bin/
+obj/
+.vs/
+
+## Środowisko .NET (C# / Blazor / WebAPI)
+# Pliki użytkownika i cache Visual Studio / VS Code
+*.user
+*.userosscache
+*.sln.docstates
+.vscode/
+.idea/
+
+# Pliki kompilacji i publikacji
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+_GeneratedInternalTypeHelper.cs
+
+# Narzędzia .NET Core / Entity Framework
+.dotnet/
+appsettings.Development.json
+
+## Środowisko JavaScript / React
+node_modules/
+jspm_packages/
+
+# Logi błędów npm i yarn
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Foldery produkcyjne frontendu
+dist/
+build/
+out/
+
+# Pliki środowiskowe
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+## Pliki systemowe (Mac / Windows)
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
