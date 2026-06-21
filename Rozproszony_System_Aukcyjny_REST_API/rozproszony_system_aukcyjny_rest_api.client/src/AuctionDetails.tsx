@@ -10,7 +10,7 @@ function AuctionDetails() {
   const [bidAmount, setBidAmount] = useState<string>('');
 
   useEffect(() => {
-    apiFetch(`http://localhost:5044/api/auctions/${id}`)
+    apiFetch(`http://localhost:61089/api/auctions/${id}`)
       .then(res => res.json())
       .then(data => setAuction(data))
       .catch(err => console.error("Błąd pobierania szczegółów:", err));
@@ -20,7 +20,7 @@ function AuctionDetails() {
 
   const handleBid = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const res = await apiFetch(`http://localhost:5044/api/auctions/${id}/bids`, {
+    const res = await apiFetch(`http://localhost:61089/api/auctions/${id}/bids`, {
       method: 'POST',
       body: JSON.stringify({ amount: parseFloat(bidAmount) })
     });

@@ -1,4 +1,4 @@
-@Rozproszony_System_Aukcyjny_REST_API.Server_HostAddress = http://localhost:5044
+@Rozproszony_System_Aukcyjny_REST_API.Server_HostAddress = http://localhost:61089
 
 GET {{Rozproszony_System_Aukcyjny_REST_API.Server_HostAddress}}/weatherforecast/
 Accept: application/json

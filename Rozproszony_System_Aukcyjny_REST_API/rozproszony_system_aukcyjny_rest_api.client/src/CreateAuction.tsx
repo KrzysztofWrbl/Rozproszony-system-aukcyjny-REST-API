@@ -37,7 +37,7 @@ function CreateAuction() {
     };
 
     try {
-      const response = await apiFetch('http://localhost:5044/api/auctions', {
+      const response = await apiFetch('http://localhost:61089/api/auctions', {
       method: 'POST',
       body: JSON.stringify(auctionData)
     });

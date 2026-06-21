@@ -8,7 +8,7 @@ function AuctionList() {
   const [auctions, setAuctions] = useState<Auction[]>([]);
 
   useEffect(() => {
-    apiFetch('http://localhost:5044/api/auctions')
+    apiFetch('http://localhost:61089/api/auctions')
       .then(response => response.json())
       .then(data => setAuctions(data))
       .catch(error => console.error("Błąd pobierania aukcji:", error));

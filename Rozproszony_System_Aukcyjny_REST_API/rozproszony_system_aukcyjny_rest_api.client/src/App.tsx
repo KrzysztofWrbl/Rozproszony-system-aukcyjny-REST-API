@@ -12,7 +12,8 @@ function AuthPanel() {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
   e.preventDefault();
-  const url = isLoginView ? 'http://localhost:5044/api/auth/login' : 'http://localhost:5044/api/auth/register';
+  
+  const url = isLoginView ? '/api/auth/login' : '/api/auth/register';
   
   const response = await fetch(url, {
     method: 'POST',
@@ -23,7 +24,7 @@ function AuthPanel() {
   if (response.ok) {
     if (isLoginView) {
       const data = await response.json();
-      localStorage.setItem('token', data.token); // ZAPISUJEMY TOKEN!
+      localStorage.setItem('token', data.token);
       alert("Zalogowano!");
     } else {
       alert("Zarejestrowano! Teraz możesz się zalogować.");

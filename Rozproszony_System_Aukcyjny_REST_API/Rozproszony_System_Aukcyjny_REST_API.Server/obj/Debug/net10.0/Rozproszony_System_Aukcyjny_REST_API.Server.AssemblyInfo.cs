@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Rozproszony_System_Aukcyjny_REST_API.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+26d337ac0ece7af0bc8190b759c9d55e11671680")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+15f3f756b0aacfeb6d06423eaa04b5e1c88192f8")]
 [assembly: System.Reflection.AssemblyProductAttribute("Rozproszony_System_Aukcyjny_REST_API.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Rozproszony_System_Aukcyjny_REST_API.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

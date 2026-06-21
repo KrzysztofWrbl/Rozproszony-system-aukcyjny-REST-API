@@ -2617,11 +2617,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/katarzyna/Downloads/Rozproszony-system-aukcyjny-REST-API-main/Rozproszony_System_Aukcyjny_REST_API/Rozproszony_System_Aukcyjny_REST_API.Server/Rozproszony_System_Aukcyjny_REST_API.Server.csproj",
+      "projectUniqueName": "/Users/katarzyna/projekt/Rozproszony-system-aukcyjny-REST-API/Rozproszony_System_Aukcyjny_REST_API/Rozproszony_System_Aukcyjny_REST_API.Server/Rozproszony_System_Aukcyjny_REST_API.Server.csproj",
       "projectName": "Rozproszony_System_Aukcyjny_REST_API.Server",
-      "projectPath": "/Users/katarzyna/Downloads/Rozproszony-system-aukcyjny-REST-API-main/Rozproszony_System_Aukcyjny_REST_API/Rozproszony_System_Aukcyjny_REST_API.Server/Rozproszony_System_Aukcyjny_REST_API.Server.csproj",
+      "projectPath": "/Users/katarzyna/projekt/Rozproszony-system-aukcyjny-REST-API/Rozproszony_System_Aukcyjny_REST_API/Rozproszony_System_Aukcyjny_REST_API.Server/Rozproszony_System_Aukcyjny_REST_API.Server.csproj",
       "packagesPath": "/Users/katarzyna/.nuget/packages/",
-      "outputPath": "/Users/katarzyna/Downloads/Rozproszony-system-aukcyjny-REST-API-main/Rozproszony_System_Aukcyjny_REST_API/Rozproszony_System_Aukcyjny_REST_API.Server/obj/",
+      "outputPath": "/Users/katarzyna/projekt/Rozproszony-system-aukcyjny-REST-API/Rozproszony_System_Aukcyjny_REST_API/Rozproszony_System_Aukcyjny_REST_API.Server/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/katarzyna/.nuget/NuGet/NuGet.Config"
